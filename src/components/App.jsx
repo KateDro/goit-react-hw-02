@@ -1,35 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import { Description } from "./Description/Description";
+import { Options } from "./Options/Options";
+import { Feedback } from "./Feedback/Feedback";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+export function App() {
+  const savedRates = JSON.parse(localStorage.getItem("saved-rates")) || {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
+
+  const [rates, setRates] = useState(savedRates);
+
+  useEffect(() => {
+    localStorage.setItem("saved-rates", JSON.stringify(rates));
+  }, [rates]);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Description
+        title="Sip Happens Café"
+        description="Please leave your feedback about our service by selecting one of the options below."
+      />
+      <Options rates={rates} setRates={setRates} />
+      <Feedback rates={rates} />
     </>
-  )
+  );
 }
-
-export default App
