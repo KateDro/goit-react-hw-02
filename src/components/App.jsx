@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import { Description } from "./Description/Description";
-import { Options } from "./Options/Options";
-import { Feedback } from "./Feedback/Feedback";
+import { useEffect, useState } from "react";
 import "./App.css";
+import { Description } from "./Description/Description";
+import { Feedback } from "./Feedback/Feedback";
+import { Options } from "./Options/Options";
 
 export function App() {
   const savedRates = JSON.parse(localStorage.getItem("saved-rates")) || {
