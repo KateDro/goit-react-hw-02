@@ -8,7 +8,7 @@ export const Feedback = ({ data: { good, neutral, bad }, total }) => {
         <li>Neutral: {neutral}</li>
         <li>Bad: {bad}</li>
         <li className={css.itemTotal}>Total: {total}</li>
-        <li className={css.itemTotal}>Positive: {totalPercent}%</li>
+        <li>Positive: {totalPercent}%</li>
       </ul>
     </div>
   );

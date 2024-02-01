@@ -6,5 +6,6 @@
   align-items: flex-start;
 }
 .itemTotal {
-  font-weight: 500;
+  font-weight: 700;
+  color: rgb(18, 116, 18);
 }
