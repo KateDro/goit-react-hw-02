@@ -1,13 +1,7 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-}
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
+  font-family: sans-serif;
+  line-height: 1.5;
 }
 
 h1,
@@ -20,9 +14,14 @@ p {
   margin: 0;
 }
 
-ol,
-ul {
-  list-style: none;
+ul,
+ol {
   margin: 0;
   padding: 0;
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
 }

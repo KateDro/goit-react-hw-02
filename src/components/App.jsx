@@ -2,29 +2,59 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { Description } from "./Description/Description";
 import { Feedback } from "./Feedback/Feedback";
+import { Notification } from "./Notification/Notification";
 import { Options } from "./Options/Options";
 
-export function App() {
-  const savedRates = JSON.parse(localStorage.getItem("saved-rates")) || {
-    good: 0,
-    neutral: 0,
-    bad: 0,
+const getDataFromLocalstorage = () => {
+  return (
+    JSON.parse(window.localStorage.getItem("FeedBacks")) ?? {
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    }
+  );
+};
+
+export const App = () => {
+  const [feedbacks, setFeedBacks] = useState(getDataFromLocalstorage);
+  useEffect(() => {
+    window.localStorage.setItem("FeedBacks", JSON.stringify(feedbacks));
+  }, [feedbacks]);
+
+  const leaveFeedbacks = (name) => {
+    setFeedBacks({
+      ...feedbacks,
+      [name]: feedbacks[name] + 1,
+    });
   };
 
-  const [rates, setRates] = useState(savedRates);
+  const resetFeedbacks = () => {
+    setFeedBacks({
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    });
+  };
 
-  useEffect(() => {
-    localStorage.setItem("saved-rates", JSON.stringify(rates));
-  }, [rates]);
+  function getTotalFeedbacks() {
+    return feedbacks.good + feedbacks.neutral + feedbacks.bad;
+  }
+
+  const totalFeedbacks = getTotalFeedbacks();
 
   return (
-    <>
-      <Description
-        title="Sip Happens Café"
-        description="Please leave your feedback about our service by selecting one of the options below."
+    <div className={css.app}>
+      <Description />
+      <Options
+        leaveFeedback={leaveFeedbacks}
+        resetFeedbacks={resetFeedbacks}
+        showResetBtn={totalFeedbacks > 0}
       />
-      <Options rates={rates} setRates={setRates} />
-      <Feedback rates={rates} />
-    </>
+      {totalFeedbacks ? (
+        <Feedback data={feedbacks} total={totalFeedbacks} />
+      ) : (
+        <Notification />
+      )}
+    </div>
   );
-}
+};
